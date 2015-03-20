@@ -32,7 +32,15 @@ def create_todo():
 
 @app.route("/todos")
 def get_all():
-    return jsonify(todos=[])
+    db = connect_db()
+
+    result = []
+
+    cur = db.execute("select * from todos")
+    for row in cur.fetchall():
+        result.append({'id': row[0], 'title': row[1], 'completed': bool(row[2])})
+
+    return jsonify(todos=result)
 
 @app.route("/todos/active")
 def get_active():
