@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import sqlite3
 
 app = Flask(__name__)
@@ -18,6 +18,20 @@ def text_from_db():
 @app.route("/")
 def hello():
     return "Hello World!"
+
+@app.route("/todos")
+def get_all():
+    return jsonify("")
+
+@app.route("/todos/active")
+def get_active():
+    return get_all()
+
+@app.route("/todo", methods=['POST'])
+def create_todo():
+    print request.get_json()
+
+
 
 if __name__ == "__main__":
     app.run()
