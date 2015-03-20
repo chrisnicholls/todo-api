@@ -21,14 +21,9 @@ def hello():
 @app.route("/todo", methods=['POST'])
 def create_todo():
     todo = request.get_json()
-    title = todo['title']
-    completed = 0
-
-    if todo['completed']:
-        completed = 1
 
     db = connect_db()
-    db.execute("insert into todos (title,completed) values (?,?)", (title, completed))
+    db.execute("insert into todos (title,completed) values (?,?)", (todo['title'], todo['completed']))
 
     db.commit()
     db.close()
